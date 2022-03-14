@@ -1,16 +1,30 @@
-# dr_cash_clinics
+# Dr Cash Clinics
 
-Dr Cash Clinics
+Projeto desenvolvido para o desafio técnico da Dr. Cash
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+## Instalação
 
-A few resources to get you started if this is your first Flutter project:
+Faça o clone deste repositório Ex:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+```bash
+git clone git@github.com:Hallysonjp/dr_cash_clinics.git
+```
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Instale as dependencias do DART
+```bash
+flutter pub get
+```
+Certifique-se que o Emulador está instalado e rodando;
+Inicie a aplicação
+```bash
+flutter run
+```
+
+
+## Contribuição
+Pull requests são bem-vindos.
+
+
+## Licença
+[MIT](https://choosealicense.com/licenses/mit/)

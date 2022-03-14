@@ -17,14 +17,16 @@ dependencies:
   shared_preferences: ^2.0.6
   url_launcher: ^6.0.20
 
+  #ANIMATION PAGE
+  animated_splash_screen: ^1.2.0
+  page_transition: ^2.0.5
+
   # STATE MANAGEMENT
   mobx: ^2.0.3
   flutter_mobx: ^2.0.1
 
-  #LOCATION
-#  geolocator: 8.0.5
-#  geocoder: ^0.2.1
-  location: ^4.2.0
+  #DIALOG
+  flutter_awesome_alert_box: ^2.1.1
 
   cupertino_icons: ^1.0.2
 
@@ -33,6 +35,12 @@ dev_dependencies:
     sdk: flutter
 
   flutter_lints: ^1.0.0
+  flutter_launcher_icons: ^0.9.2
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon/icon.png"
 
 flutter:
   uses-material-design: true

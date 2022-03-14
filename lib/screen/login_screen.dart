@@ -1,14 +1,13 @@
 import 'dart:convert';
 
-import 'package:dr_cash_clinics/screen/home_screen.dart';
-import 'package:dr_cash_clinics/screen/test_screen.dart';
+import 'package:dr_cash_clinics/screen/search_screen.dart';
 import 'package:dr_cash_clinics/services/api.dart';
 import 'package:dr_cash_clinics/utils/dialogs.dart';
 import 'package:dr_cash_clinics/utils/widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_awesome_alert_box/flutter_awesome_alert_box.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -25,50 +24,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   GlobalKey<State> _keyLoader = GlobalKey<State>();
 
-  Location location = new Location();
-  bool? _serviceEnabled;
-  PermissionStatus? _permissionGranted;
-  LocationData? _locationData;
-
-  serviceEnabled() async {
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled!) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled!) {
-        return;
-      }
-    }
-  }
-
-  permissionGranted() async {
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        return;
-      }
-    }
-  }
-
-  getLocationData() async {
-    _locationData = await location.getLocation();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    serviceEnabled();
-    permissionGranted();
-    getLocationData();
-    getLocation();
-  }
-
-  getLocation() {
-    print('aqui');
-    // var address = await Geocoder.local.findAddressesFromCoordinates(coordinates);
-    // String yourCityName = address.first.locality;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,15 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: <Widget>[
                   SizedBox(height: 30),
                   Image.asset("assets/images/logoblue.png"),
-                  SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      // formHeading("Login"),
-                      // formSubHeadingForm(t1_lbl_sign_up),
-                    ],
-                  ),
-                  SizedBox(height: 50),
+                  SizedBox(height: 65),
                   editTextStyle("E-mail",
                       isPassword: false, controller: emailCont),
                   SizedBox(height: 16),
@@ -170,21 +117,25 @@ class _LoginScreenState extends State<LoginScreen> {
     var data = {'email': emailCont.text, 'password': passwordCont.text};
     var res = await Network().authData(data, '/identity/token');
     var body = json.decode(res.body);
-
+    Navigator.of(context).pop();
     if (body['access_token'] != null) {
       SharedPreferences localStorage = await SharedPreferences.getInstance();
       localStorage.setString('token', json.encode(body['access_token']));
       localStorage.setString('user', json.encode(body['user']));
-      Navigator.of(this.context, rootNavigator: true).pop();
-
       Future.delayed(Duration.zero, () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => HomeScreen()),
+          MaterialPageRoute(builder: (context) => SearchScreen()),
         );
       });
     } else {
-      _showMyDialog("Usuário ou senha incorretos.");
+      DangerBgAlertBox(
+          icon: Icons.error,
+          context: context,
+          title: "Ops!",
+          infoMessage: "Usuário ou senha incorretos"
+      );
+      InfoAlertBoxCenter(context: context);
     }
     Navigator.of(this.context, rootNavigator: true).pop();
   }

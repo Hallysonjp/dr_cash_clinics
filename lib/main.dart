@@ -1,4 +1,4 @@
-import 'package:dr_cash_clinics/screen/login_screen.dart';
+import 'package:dr_cash_clinics/screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: LoginScreen(),
+        home: SplashScreen(),
       ),
     );
   }
